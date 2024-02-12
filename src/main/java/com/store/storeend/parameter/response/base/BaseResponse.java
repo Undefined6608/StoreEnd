@@ -1,8 +1,8 @@
-package com.store.storeend.param.response.base;
+package com.store.storeend.parameter.response.base;
 
 import java.io.Serializable;
 
-import static com.store.storeend.param.response.base.DefaultStatus.SUCCESS;
+import static com.store.storeend.parameter.response.base.DefaultStatus.SUCCESS;
 
 public final class BaseResponse<T> implements Serializable {
     private static final long serialVersionUID = 3886133510113334083L;

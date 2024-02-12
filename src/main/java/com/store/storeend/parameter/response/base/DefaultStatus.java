@@ -1,4 +1,4 @@
-package com.store.storeend.param.response.base;
+package com.store.storeend.parameter.response.base;
 
 // Response code enumeration class
 public enum DefaultStatus implements StatusCode{

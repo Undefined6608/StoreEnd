@@ -1,4 +1,4 @@
-package com.store.storeend.param.response.base;
+package com.store.storeend.parameter.response.base;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
