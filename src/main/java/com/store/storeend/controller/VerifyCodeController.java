@@ -4,7 +4,6 @@ import com.store.storeend.parameter.request.SendEmailRequest;
 import com.store.storeend.parameter.request.roles.RequestRoles;
 import com.store.storeend.parameter.response.base.BaseResponse;
 import com.store.storeend.parameter.response.base.DefaultStatus;
-import com.store.storeend.parameter.response.base.StatusCode;
 import com.store.storeend.service.VerifyCodeService;
 import com.store.storeend.util.VerifyCode;
 import org.apache.tomcat.util.codec.binary.Base64;

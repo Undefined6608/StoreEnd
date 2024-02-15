@@ -2,7 +2,7 @@ package com.store.storeend.service;
 
 import com.store.storeend.enums.RedisEnum;
 import com.store.storeend.util.RedisUtil;
-import com.store.storeend.util.VerificationCodeGenerator;
+import com.store.storeend.util.VerificationCodeUtil;
 import com.store.storeend.util.VerifyCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +25,7 @@ public class VerifyCodeService {
     private JavaMailSender emailSender;
 
     @Autowired
-    private VerificationCodeGenerator codeGenerator;
+    private VerificationCodeUtil codeGenerator;
 
     @Value("${spring.mail.username}")
     private String username;
@@ -50,7 +50,7 @@ public class VerifyCodeService {
                 "If it is not your own operation, please disregard this email.");
         emailSender.send(message);
         // 将验证码存入redis
-        redisUtil.set(code, RedisEnum.EMAIL_CODE, 5 * 60);
+        redisUtil.set(code, RedisEnum.EMAIL_CODE + "-" + to, 5 * 60);
         return true;
     }
 }

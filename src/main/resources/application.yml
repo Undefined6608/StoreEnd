@@ -2,21 +2,36 @@
 server:
   port: 8080
 
-# Database configurations
 spring:
+  # 数据库
   datasource:
     url: jdbc:mysql://localhost:3306/store?characterEncoding=utf-8
     username: root
     password: 555555
+  # redis 配置
   redis:
     host: 127.0.0.1
     port: 6379
     password: f8c5a616-a0ac-40af-a283-052746649c69
     database: 1
+    # 连接超时时间 60s
+    timeout: 60s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 10
+        # 连接池中的最大空闲连接
+        max-idle: 30
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+  # jpa 配置
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+  # 邮箱配置
   mail:
     host: smtp.qq.com
     port: 587
@@ -28,6 +43,25 @@ spring:
           auth: true
           starttls:
             enable: true
+  # security 配置
+  security:
+    user:
+      user: admin
+      password: 3f6daad4-9edf-4482-98d7-5be2d0b127bc
+    password:
+      encoding:
+        # Bcrypt加盐次数
+        strength: 12
+  # jwt 配置
+  jwt:
+    secret: 3cc8dfae-7876-4c3e-847b-e33b961aed55
+    expiration: 3600000
+  # 私钥配置
+  private-key:
+    password: 56a87368-ad5a-439e-9b2b-a8ce1566ab21
+  # 开发工具配置
   devtools:
+    livereload:
+      enabled: true
     restart:
       enable: true
