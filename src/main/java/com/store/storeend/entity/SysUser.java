@@ -1,14 +1,12 @@
 package com.store.storeend.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "sys_user")
 public class SysUser {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",length = 10, nullable = false)
     private Integer id;
     @Column(name = "user_name", nullable = false)
@@ -21,7 +19,7 @@ public class SysUser {
     private String phone;
     @Column(name = "gender", nullable = false)
     private Boolean gender;
-    @Column(name = "limit",length = 10, nullable = false)
+    @Column(name = "limit_type",length = 10, nullable = false)
     private Integer limit;
     @Column(name = "avatar", nullable = false)
     private String avatar;
@@ -29,13 +27,13 @@ public class SysUser {
     private Integer integral;
     @Column(name = "balance",length = 10, nullable = false)
     private Integer balance;
-    @Column(name = "enable", nullable = false)
+    @Column(name = "enable_status", nullable = false)
     private Boolean enable;
-    @Column(name = "like",length = 10, nullable = false)
+    @Column(name = "like_num",length = 10, nullable = false)
     private Integer like;
     @Column(name = "dont_like",length = 10, nullable = false)
     private Integer dontLike;
-    @Column(name = "uid",length = 36, nullable = false)
+    @Column(name = "uid",length = 36, nullable = false,columnDefinition = "VARCHAR(36)")
     private String uid;
 
     public Integer getId() {

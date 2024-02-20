@@ -24,10 +24,10 @@ public class SecurityConfig {
     // 验证码放行
     public static final List<String> VERIFY_CODE_WHITE_LIST = List.of("/verify_code/**");
     // 自定义放行
-    public static final List<String> CUSTOM_WHITE_LIST = List.of("/user/register");
+    public static final List<String> CUSTOM_WHITE_LIST = List.of("/user/register","/user/user-name_plagiarism_check","/user/phone_plagiarism_check","/user/email_plagiarism_check");
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        // 放行端口
+        // 放行接口
         return (web) -> web
                 .ignoring()
                 .requestMatchers(TEST_WHITE_LIST.toArray(new String[0]))

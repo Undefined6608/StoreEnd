@@ -86,4 +86,18 @@ public class UserRegisterRequest {
         this.avatar = avatar;
     }
 
+    @Override
+    public String toString() {
+        return "UserRegisterRequest{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", verPassword='" + verPassword + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", emailCode='" + emailCode + '\'' +
+                ", imgCode='" + imgCode + '\'' +
+                ", gender='" + gender + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
+    }
 }

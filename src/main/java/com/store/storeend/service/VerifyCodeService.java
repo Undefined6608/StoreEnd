@@ -34,7 +34,7 @@ public class VerifyCodeService {
         BufferedImage image = vc.getImage();
         String verifyCode = vc.getText();
         // 将验证码存入redis
-        redisUtil.set(verifyCode, RedisEnum.IMAGE_CODE, 5 * 60);
+        redisUtil.set(verifyCode, RedisEnum.IMAGE_CODE, 10 * 60);
         return image;
     }
 
@@ -50,7 +50,7 @@ public class VerifyCodeService {
                 "If it is not your own operation, please disregard this email.");
         emailSender.send(message);
         // 将验证码存入redis
-        redisUtil.set(code, RedisEnum.EMAIL_CODE + "-" + to, 5 * 60);
+        redisUtil.set(code, RedisEnum.EMAIL_CODE + "-" + to, 10 * 60);
         return true;
     }
 }

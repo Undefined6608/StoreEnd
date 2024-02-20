@@ -4,7 +4,6 @@ import com.store.storeend.enums.RedisEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -31,18 +30,14 @@ public class VerificationCodeUtil {
     }
 
     public boolean verifyImgCode(String imgCode) {
-        List<Object> list = redisUtil.lGet(imgCode);
-        if (list.size() == 0) return true;
-        for (Object o : list)
-            return !o.equals(RedisEnum.IMAGE_CODE);
-        return true;
+        Object obj = redisUtil.get(imgCode);
+        if (obj == null) return true;
+        return !obj.equals(RedisEnum.IMAGE_CODE.toString());
     }
 
     public boolean verifyEmailCode(String emailCode, String email) {
-        List<Object> list = redisUtil.lGet(emailCode);
-        if (list.size() == 0) return true;
-        for (Object o : list)
-            return !o.equals(RedisEnum.EMAIL_CODE + "-" + email);
-        return true;
+        Object obj = redisUtil.get(emailCode);
+        if (obj == null) return true;
+        return !obj.equals(RedisEnum.EMAIL_CODE + "-" + email);
     }
 }

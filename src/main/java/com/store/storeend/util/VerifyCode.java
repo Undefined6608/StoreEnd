@@ -11,7 +11,7 @@ import java.util.Random;
 
 @Component
 public class VerifyCode {
-    private final int width = 150;    //生成验证码图片的宽度
+    private final int width = 200;    //生成验证码图片的宽度
     private final int height = 40;    //生成验证码图片的高度
     private final String[] fontNames = {"宋体","楷体","隶书","微软雅黑"};
     private Color bgColor; //定义验证码图片的背景色
