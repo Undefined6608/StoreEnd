@@ -1,10 +1,10 @@
 package com.store.storeend.util;
 
+import com.store.storeend.entity.SysUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -28,9 +28,24 @@ public class JwtTokenUtil {
     private long expiration; // 从配置文件中读取的JWT过期时间
 
     // 生成JWT Token
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(SysUser user) {
+        System.out.println(secret);
+        System.out.println(expiration);
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername());
+        claims.put("id", user.getId());
+        claims.put("username", user.getUserName());
+        claims.put("email", user.getEmail());
+        claims.put("phone", user.getPhone());
+        claims.put("gender", user.getGender());
+        claims.put("limit", user.getLimit());
+        claims.put("avatar", user.getAvatar());
+        claims.put("integral", user.getIntegral());
+        claims.put("balance", user.getBalance());
+        claims.put("enable", user.getEnable());
+        claims.put("like", user.getLike());
+        claims.put("dontLike", user.getDontLike());
+        claims.put("uid", user.getUid());
+        return createToken(claims, user.getUid());
     }
 
     // 创建JWT Token
@@ -50,6 +65,12 @@ public class JwtTokenUtil {
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+    }
+
+    // 从 JWT Token 中提取所要的信息
+    public Object getTokenInfo(String token, String key) {
+        final Claims claims = extractAllClaims(token);
+        return claims.get(key);
     }
 
     // 提取JWT Token中的所有声明
@@ -73,8 +94,8 @@ public class JwtTokenUtil {
     }
 
     // 验证JWT Token是否有效
-    public boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    public boolean validateToken(String token, SysUser user) {
+        final String uid = extractUsername(token);
+        return (uid.equals(user.getUid()) && !isTokenExpired(token));
     }
 }

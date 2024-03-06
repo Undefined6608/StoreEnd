@@ -3,6 +3,7 @@ package com.store.storeend.parameter.request.roles;
 import com.store.storeend.parameter.request.*;
 import com.store.storeend.enums.RegularEnum;
 import com.store.storeend.util.ParameterTools;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -48,5 +49,11 @@ public class RequestRoles {
 
     public static Boolean SendEmailRoles(SendEmailRequest sendEmailRequest){
         return !ParameterTools.isRegularization(RegularEnum.EMAIL.getValue(), sendEmailRequest.getEmail());
+    }
+
+    public static Boolean PhoneLoginRoles(UserPhoneLoginRequest userPhoneLoginRequest){
+        return !ParameterTools.isRegularization(RegularEnum.PHONE.getValue(),userPhoneLoginRequest.getPhone())
+                || !ParameterTools.isRegularization(RegularEnum.PASSWORD.getValue(), userPhoneLoginRequest.getPassword())
+                || !ParameterTools.isRegularization(RegularEnum.IMG_CODE.getValue(), userPhoneLoginRequest.getImgCode());
     }
 }

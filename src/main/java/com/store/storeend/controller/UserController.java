@@ -1,10 +1,8 @@
 package com.store.storeend.controller;
 
-import com.store.storeend.parameter.request.EmailPlagiarismRequest;
-import com.store.storeend.parameter.request.PhonePlagiarismRequest;
-import com.store.storeend.parameter.request.UserNamePlagiarismRequest;
-import com.store.storeend.parameter.request.UserRegisterRequest;
+import com.store.storeend.parameter.request.*;
 import com.store.storeend.parameter.request.roles.RequestRoles;
+import com.store.storeend.parameter.response.UserLoginResponse;
 import com.store.storeend.parameter.response.base.BaseResponse;
 import com.store.storeend.parameter.response.base.DefaultStatus;
 import com.store.storeend.service.UserService;
@@ -86,5 +84,27 @@ public class UserController {
         Boolean status = userService.register(userRegisterRequest);
         if (!status) return BaseResponse.with(DefaultStatus.PARAM_ERROR, "register failed");
         return new BaseResponse<>("login was successful");
+    }
+
+    @PostMapping("/phone_login")
+    public BaseResponse<UserLoginResponse> phoneLogin(@RequestBody UserPhoneLoginRequest userPhoneLoginRequest) {
+        UserLoginResponse userLoginResponse = new UserLoginResponse();
+        // 参数格式判定
+        if (RequestRoles.PhoneLoginRoles(userPhoneLoginRequest))
+            return BaseResponse.with(DefaultStatus.PARAM_ERROR, "Parameter error!");
+        // 图像验证码判定
+        if (verificationCodeUtil.verifyImgCode(userPhoneLoginRequest.getImgCode()))
+            return BaseResponse.with(DefaultStatus.PARAM_ERROR, "Graphics verification code from error!");
+        // 用户状态判定
+        if (userService.userStatus(userPhoneLoginRequest))
+            return BaseResponse.with(DefaultStatus.PARAM_ERROR, "The user does not exist or has been logged out!");
+        // 密码验证
+        if (userService.verifyPassword(userPhoneLoginRequest))
+            return BaseResponse.with(DefaultStatus.PARAM_ERROR, "Password error!");
+        // 生成Token
+        String token = userService.phoneLoginToken(userPhoneLoginRequest);
+        if (token.isEmpty()) return BaseResponse.with(DefaultStatus.FAILURE,"Unknown error, please contact the administrator!");
+        userLoginResponse.setToken(token);
+        return new BaseResponse<>(userLoginResponse);
     }
 }
